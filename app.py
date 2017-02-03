@@ -4,7 +4,7 @@
 import os
 import json
 from flask import Flask, render_template, request, redirect, url_for
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
+from flask_socketio import SocketIO, send, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 
 from twilio import twiml
@@ -13,6 +13,11 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '')
 socketio = SocketIO(app)
+
+
+@socketio.on('connect')
+def on_connect():
+    send('connected')
 
 
 @app.route('/')
