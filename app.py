@@ -4,6 +4,8 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 
+import twilio
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '')
@@ -16,9 +18,11 @@ def home():
 
 
 @app.route('/api/twilio')
-def send_text_file(file_name):
+def api():
     """Send your static text file."""
-    return 'hi'
+    resp = twilio.twiml.Response()
+    resp.message("Hello, Mobile Monkey")
+    return str(resp)
 
 
 if __name__ == '__main__':
