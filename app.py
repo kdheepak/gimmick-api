@@ -17,12 +17,11 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/api/twilio')
-def api():
-    """Send your static text file."""
-    resp = twiml.Response()
-    resp.message("Hello, Mobile Monkey")
-    return str(resp)
+@app.route('/sms', methods=['GET', 'POST'])
+def sms():
+    response = twiml.Response()
+    response.sms("Congratulations! ")
+    return str(response)
 
 
 if __name__ == '__main__':
