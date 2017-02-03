@@ -6,4 +6,4 @@ twilio
 # Production Server
 # ----------------------
 gevent
-gunicorn
+gunicorn==18.0.0
