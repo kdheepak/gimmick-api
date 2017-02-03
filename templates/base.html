@@ -51,6 +51,20 @@
   <!-- Additional JavaScript libraries and plugins... -->
   {% block js %}{% endblock %}
 
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+
+        var socket = io.connect();
+
+        // the socket.io documentation recommends sending an explicit package upon connection
+        socket.on('connect', function() {
+            socket.emit('connect', {data: 'I\'m connected!'});
+            console.log('Connected')
+        });
+
+    });
+</script>
+
 
   <!-- Prompt IE < 8 users to install Chrome Frame.  -->
   <!--[if lt IE 8 ]>
