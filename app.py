@@ -19,6 +19,9 @@ def home():
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
+    # retrieve message.
+    received_message = request.values.get('Body').strip().lower()
+    print(received_message)
     response = twiml.Response()
     response.sms("Congratulations! ")
     return str(response)
