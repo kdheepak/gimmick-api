@@ -9,6 +9,7 @@ Werkzeug==0.10.4
 # ----------------------
 # Production Server
 # ----------------------
+gevent
 eventlet==0.17.4
 greenlet==0.4.9
 gunicorn==18.0.0
