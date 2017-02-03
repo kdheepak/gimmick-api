@@ -15,27 +15,25 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '')
 socketio = SocketIO(app)
 
 
-@socketio.on('connect')
-def on_connect():
-    send('connected')
-
-
 @app.route('/')
-def home():
-    """Render website's home page."""
+def index():
     return render_template('index.html')
 
 
-@app.route('/sms', methods=['GET', 'POST'])
-def sms():
-    # retrieve message.
-    body = request.values.get('Body')
-    received_message = body.strip() if body is not None else ''
-    socketio.emit('sms', json.dumps({'data': received_message}))
-    response = twiml.Response()
-    response.sms("Message received")
-    return str(response)
+@socketio.on('my event', namespace='/test')
+def test_message(message):
+    emit('my response', {'data': message['data']})
 
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    emit('my response', {'data': 'Connected'})
+
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    print('Client disconnected')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app)
+
