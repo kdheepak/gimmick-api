@@ -1,29 +1,22 @@
-"""
-"""
-
-import os
+from flask import Flask, render_template
+from flask_socketio import SocketIO, send, emit
 import json
-from flask import Flask, render_template, request, redirect, url_for
-from flask_socketio import SocketIO, send, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
 
-from twilio import twiml
 
 app = Flask(__name__)
-
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '')
 socketio = SocketIO(app)
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('index.html',)
 
 
-@socketio.on('connect')
-def connect():
-    emit('status', {'data': 'Connected'})
+@socketio.on('send_message')
+def handle_source(json_data):
+    text = json_data['message'].encode('ascii', 'ignore')
+    socketio.emit('echo', {'echo': 'Server Says: ' + text})
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     socketio.run(app)
-
