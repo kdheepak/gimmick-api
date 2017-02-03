@@ -55,7 +55,7 @@
 
 $(document).ready(function(){
     console.log(document.domain + ':' + location.port)
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var socket = io.connect('https://' + document.domain + ':' + location.port);
     socket.on('my response', function(msg) {
         $('#log').append('<p>Received: ' + msg.data + '</p>');
     });
