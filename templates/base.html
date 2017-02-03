@@ -23,7 +23,7 @@
             // section of the page.
             socket.on('sms', function(msg) {
                 console.log(msg)
-                $('#log').append('<br>' + $('<div/>').text('Received : ' + msg.data).html());
+                $('#log').append('<br>' + $('<div/>').text('Received : ' + msg.from).html());
             });
 
         });

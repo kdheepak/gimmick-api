@@ -23,13 +23,10 @@ def index():
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
-    # retrieve message.
-    print(request.values)
-    received_message = request.values.get('Body').strip()
-    socketio.emit('sms', json.dumps({'data': received_message}))
-    response = twiml.Response()
-    response.sms("Message received")
-    return str(response)
+    message_body = request.values.get('Body').strip()
+    message_from = request.values.get('From').strip()
+    socketio.emit('sms', json.dumps({'from': message_from, 'body': message_body}))
+    return ''
 
 
 
