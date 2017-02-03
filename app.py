@@ -29,7 +29,8 @@ def home():
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
     # retrieve message.
-    received_message = request.values.get('Body').strip()
+    body = request.values.get('Body')
+    received_message = body.strip() if body is not None else ''
     socketio.emit('sms', json.dumps({'data': received_message}))
     response = twiml.Response()
     response.sms("Message received")
