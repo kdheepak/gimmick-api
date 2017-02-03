@@ -4,7 +4,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 
-import twilio
+from twilio import twiml
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def home():
 @app.route('/api/twilio')
 def api():
     """Send your static text file."""
-    resp = twilio.twiml.Response()
+    resp = twiml.Response()
     resp.message("Hello, Mobile Monkey")
     return str(resp)
 
