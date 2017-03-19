@@ -23,9 +23,29 @@ def index():
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
+    docstring = '''Reply with a comma separated list of libraries or languages.
+
+e.g.
+
+    libraries: ggplot2, matplotlib, d3.js
+
+OR
+
+    languages: R, Python
+'''
     message_body = request.values.get('Body').strip()
     message_from = request.values.get('From').strip()
-    socketio.emit('sms', json.dumps({'from': message_from, 'body': message_body}))
+    if 'help' in message_body.replace(' ', '').lower().split():
+        resp = twiml.Response()
+        resp.message(docstring)
+        return str(resp)
+
+    if 'libraries:' not in message_body.replace(' ', '').lower() and 'languages:' not in message_body.replace(' ', '').lower():
+        resp = twiml.Response()
+        resp.message("I did not understand that. Can you try again?\n\n" + docstring)
+        return str(resp)
+    else:
+        socketio.emit('sms', json.dumps({'from': message_from, 'body': message_body}))
     return ''
 
 
