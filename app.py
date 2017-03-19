@@ -40,7 +40,9 @@ OR
         resp.message(docstring)
         return str(resp)
 
-    if 'libraries:' not in message_body.replace(' ', '').lower() and 'languages:' not in message_body.replace(' ', '').lower():
+    body = message_body.replace(' ', '').lower()
+
+    if ('libraries:' not in body and 'languages:' not in body) or (':' in body.split(':')[1] or body.split(':')[1] == ''):
         resp = twiml.Response()
         resp.message("I did not understand that. Can you try again?\n\n" + docstring)
         return str(resp)
