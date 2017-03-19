@@ -35,7 +35,7 @@ OR
 '''
     message_body = request.values.get('Body').strip()
     message_from = request.values.get('From').strip()
-    if 'help' in message_body.replace(' ', '').lower().split():
+    if 'documentation' in message_body.replace(' ', '').lower().split():
         resp = twiml.Response()
         resp.message(docstring)
         return str(resp)
