@@ -50,15 +50,15 @@ OR
     if 'docs' in body and 'survey' in body:
         resp = twiml.Response()
         resp.message(docstring_survey)
-        return str(resp)
+        return '' # str(resp)
     elif 'docs' in body and 'mouse' in body:
         resp = twiml.Response()
         resp.message(docstring_mouse)
-        return str(resp)
+        return '' # str(resp)
     elif 'docs' == body:
         resp = twiml.Response()
         resp.message(docstring)
-        return str(resp)
+        return '' # str(resp)
 
     if ('libraries:' not in body and 'languages:' not in body) or (':' in body.split(':')[1] or body.split(':')[1] == ''):
         if body in ['up', 'down', 'left', 'right']:
@@ -67,7 +67,7 @@ OR
         else:
             resp = twiml.Response()
             resp.message("I did not understand that. Type 'docs' for more information.")
-            return str(resp)
+            return '' # str(resp)
     else:
         socketio.emit('sms', json.dumps({'from': message_from, 'body': message_body}))
     return ''
