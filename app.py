@@ -25,8 +25,8 @@ def index():
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
     docstring_mouse = '''Send "up", "down", "left" or "right" to move the mouse.
-When the mouse gets the cheese, person with the winning move gets 2 points.
-When the mouse gets trapped cheese, person with the winning move gets one point and the previous winner loses one point.
+When the mouse gets the cheese, the person with the winning move gets 2 points.
+When the mouse is poisoned, the person with the winning move gets one point and the previous winner loses one point.
 '''
 
     docstring_survey = '''Reply with a comma separated list of libraries or languages.
@@ -40,22 +40,22 @@ OR
     languages: R, Python
 '''
 
-    docstring = '''Type "documentation survey" or "documentation mouse" for more information'''
+    docstring = '''Type "docs survey" or "docs mouse" for more information'''
 
     message_body = request.values.get('Body').strip()
     message_from = request.values.get('From').strip()
 
     body = message_body.replace(' ', '').lower()
 
-    if 'documentation' in body and 'survey' in body:
+    if 'docs' in body and 'survey' in body:
         resp = twiml.Response()
         resp.message(docstring_survey)
         return str(resp)
-    elif 'documentation' in body and 'mouse' in body:
+    elif 'docs' in body and 'mouse' in body:
         resp = twiml.Response()
         resp.message(docstring_mouse)
         return str(resp)
-    elif 'documentation' == body:
+    elif 'docs' == body:
         resp = twiml.Response()
         resp.message(docstring)
         return str(resp)
@@ -66,7 +66,7 @@ OR
             return ''
         else:
             resp = twiml.Response()
-            resp.message("I did not understand that. Type 'documentation' for more information.")
+            resp.message("I did not understand that. Type 'docs' for more information.")
             return str(resp)
     else:
         socketio.emit('sms', json.dumps({'from': message_from, 'body': message_body}))
