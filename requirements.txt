@@ -11,4 +11,4 @@ twilio
 
 eventlet # ==0.17.4
 greenlet # ==0.4.9
-gunicorn==18.0.0
+gunicorn==19.5.0
